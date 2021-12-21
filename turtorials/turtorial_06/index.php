@@ -21,18 +21,22 @@
     form input {
       margin: 10px 0;
     }
+
+    #files {
+      margin-left: 100px;
+    }
   </style>
 </head>
 
 <body>
   <form action="#" method="post" enctype="multipart/form-data">
-
+    <label>Image</label>
+    <input type="file" name="files[]" id="files" accept="image/png,image/jpg">
+    <br>
     <label>Enter the folder name:</label>
     <input type="text" name="foldername">
     <br>
-    <input type="file" name="files[]" id="files">
-    <br>
-    <input type="submit" name="submit" value="Upload">
+    <input type="submit" name="submit" value="Save">
 
   </form>
 </body>
@@ -43,14 +47,19 @@
 if (isset($_POST['submit'])) {
   if ($_POST['foldername'] != "") {
     $foldername  = $_POST['foldername'];
-    if (!is_dir($foldername));
-    mkdir($foldername);
-    foreach ($_FILES['files']['name'] as $i => $name) {
-      if (strlen($_FILES['files']['name'][$i]) > 1) {
-        move_uploaded_file($_FILES['files']['tmp_name'][$i], $foldername . '/' . $name);
+    if (!is_dir($foldername)) {
+      mkdir($foldername);
+
+      foreach ($_FILES['files']['name'] as $i => $name) {
+        if (strlen($_FILES['files']['name'][$i]) > 1) {
+          move_uploaded_file($_FILES['files']['tmp_name'][$i], $foldername . '/' . $name);
+        }
+        echo "Folder is successfully uploaded.";
       }
     }
-    echo "Folder is successfully uploaded.";
+    else{
+      echo "Uploaded in exisiting folder";
+    }
   } else
     echo "Uploaded foldername is not set";
 }
