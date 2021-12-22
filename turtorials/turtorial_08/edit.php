@@ -145,7 +145,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
               <span class="help-block"><?php echo $address_error; ?></span>
             </div>
 
-            <input type="submit" class="btn btn-primary" value="Submit">
+            <input type="submit" class="btn btn-primary" value="Update">
             <a href="index.php" class="btn btn-default">Cancel</a>
           </form>
         </div>

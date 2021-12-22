@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <span class="help-block"><?php echo $address_error; ?></span>
             </div>
 
-            <input type="submit" class="btn btn-primary" value="Submit">
+            <input type="submit" class="btn btn-primary" value="Save">
             <a href="index.php" class="btn btn-default">Cancel</a>
           </form>
         </div>
