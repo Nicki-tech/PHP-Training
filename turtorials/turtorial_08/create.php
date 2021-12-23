@@ -1,8 +1,8 @@
 <?php
 require_once "mysql.php";
 
-$first_name = $last_name = $email = $phone_number = $address = "";
-$first_name_error = $last_name_error = $email_error = $phone_number_error = $address_error = "";
+$first_name = $last_name = $email = $phone_number = $address = $age = "";
+$first_name_error = $last_name_error = $email_error = $phone_number_error = $address_error = $age_error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $firstName = trim($_POST["first_name"]);
@@ -46,9 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $address = $address;
   }
+  $age = trim($_POST["age"]);
+  if (empty($age)) {
+    $age_error = "Age is required.";
+  } else {
+    $age = $age;
+  }
 
-  if (empty($first_name_error_err) && empty($last_name_error) && empty($email_error) && empty($phone_number_error) && empty($address_error)) {
-    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `phone_number`, `address`) VALUES ('$firstName', '$lastName', '$email', '$phoneNumber', '$address')";
+  if (empty($first_name_error_err) && empty($last_name_error) && empty($email_error) && empty($phone_number_error) && empty($address_error) && empty($age_error)) {
+    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `phone_number`, `address`,`age`) VALUES ('$firstName', '$lastName', '$email', '$phoneNumber', '$address','$age')";
 
     if (mysqli_query($conn, $sql)) {
       header("location: index.php");
@@ -113,7 +119,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <textarea name="address" class="form-control"></textarea>
               <span class="help-block"><?php echo $address_error; ?></span>
             </div>
-
+            <div class="form-group <?php echo (!empty($age_error)) ? 'has-error' : ''; ?>">
+              <label>Age</label>
+              <textarea name="age" class="form-control"></textarea>
+              <span class="help-block"><?php echo $age_error; ?></span>
+            </div>
             <input type="submit" class="btn btn-primary" value="Save">
             <a href="index.php" class="btn btn-default">Cancel</a>
           </form>

@@ -1,8 +1,8 @@
 <?php
 require_once "mysql.php";
 
-$first_name = $last_name = $email = $phone_number = $address = "";
-$first_name_error = $last_name_error = $email_error = $phone_number_error = $address_error = "";
+$first_name = $last_name = $email = $phone_number = $address = $age = "";
+$first_name_error = $last_name_error = $email_error = $phone_number_error = $address_error = $age_error = "";
 
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
@@ -50,12 +50,19 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $address = $address;
   }
 
+  $age = trim($_POST["age"]);
+  if (empty($age)) {
+    $age_error = "Age is required.";
+  } else {
+    $age = $age;
+  }
+
   if (
     empty($first_name_error_err) && empty($last_name_error) &&
-    empty($email_error) && empty($phone_number_error) && empty($address_error)
+    empty($email_error) && empty($phone_number_error) && empty($address_error) && empty($age_error)
   ) {
 
-    $sql = "UPDATE `users` SET `first_name`= '$firstName', `last_name`= '$lastName', `email`= '$email', `phone_number`= '$phoneNumber', `address`= '$address' WHERE id='$id'";
+    $sql = "UPDATE `users` SET `first_name`= '$firstName', `last_name`= '$lastName', `email`= '$email', `phone_number`= '$phoneNumber', `address`= '$address' ,`age` = `$age` WHERE id='$id'";
 
     if (mysqli_query($conn, $sql)) {
       header("location: index.php");
@@ -76,6 +83,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
       $email       = $user["email"];
       $phoneNumber = $user["phone_number"];
       $address     = $user["address"];
+      $age         = $user["age"];
     } else {
       echo "Something went wrong. Please try again later.";
       header("location: edit.php");
@@ -144,7 +152,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
               <textarea name="address" class="form-control"><?php echo $address; ?></textarea>
               <span class="help-block"><?php echo $address_error; ?></span>
             </div>
-
+            <div class="form-group <?php echo (!empty($age_error)) ? 'has-error' : ''; ?>">
+              <label>Age</label>
+              <textarea name="age" class="form-control"></textarea>
+              <span class="help-block"><?php echo $age_error; ?></span>
+            </div>
             <input type="submit" class="btn btn-primary" value="Update">
             <a href="index.php" class="btn btn-default">Cancel</a>
           </form>
