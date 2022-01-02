@@ -34,5 +34,7 @@ function linechart() {
       type: "line",
       data: chartdata,
     });
-  }
+  } 
 }
+
+
