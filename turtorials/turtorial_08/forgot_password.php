@@ -21,7 +21,7 @@ require '../turtorial_08/mysql.php';
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'yunthiri1998@gmail.com';
-            $mail->Password   ="";
+            $mail->Password = "secret";
             $mail->SMTPSecure = 'ssl';
             $mail->Port       = 465;
 
