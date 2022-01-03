@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Contracts\Services\Student\StudentServiceInterface;
+
+class StudentController extends Controller
+
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private $studentInterface;
+
+    public function __construct(StudentServiceInterface $studentServiceInterface)
+    {
+      $this->studentInterface = $studentServiceInterface;
+    }
+    public function index()
+    {
+        $students = $this->studentInterface->getStudentList();
+        return view('student.index', compact('students'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+//    public function store(Request $request)
+//    {
+//        $validator = Validator::make($request->all(), [
+//            'name' => 'required|max:255',
+//            'phone'=> 'required|max:255',
+//            'email' => 'required|email',
+//            'dob'=> 'date_format:Y-M-D|before:today',
+//            'major_id'=>'required'
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return redirect()
+//                ->route('students.index')
+//                ->withInput()
+//                ->withErrors($validator);
+//        }
+//
+//        $student = $this->studentInterface->saveStudent($request);
+//
+//        if ($student) {
+//            return redirect()
+//                ->route('students.index');
+//        }
+//    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Student $student)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Student $student)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Student $student)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Student $student)
+    {
+        //
+    }
+}
