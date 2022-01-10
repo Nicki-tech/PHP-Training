@@ -89,10 +89,10 @@ class StudentDao implements StudentDaoInterface
             $students->where('students.name', 'LIKE', '%' . $name . '%');
         }
         if ($start_date) {
-            $students->where('students.name', 'LIKE', '%' . $start_date . '%');
+            $students->where('students.created_at', 'LIKE', '%' . $start_date . '%');
         }
         if ($end_date) {
-            $students->where('students.name', 'LIKE', '%' . $end_date . '%');
+            $students->where('students.updated_at', 'LIKE', '%' . $end_date . '%');
         }
         return $students->get();
 

@@ -9,10 +9,7 @@
     <label>End Date :</label>
     <input type="date" name="e_date">
     <input type="submit" name="submit" value="Search" id="submit">
-
-
 </form>
-
 
 <div class="container">
   @if (count($students) > 0)
@@ -67,8 +64,10 @@
 
            Import</a>
        </button>
+
+
+
   </div>
   @endif
 </div>
-
 

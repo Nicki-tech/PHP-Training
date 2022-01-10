@@ -97,6 +97,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+        //info($student);
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required',
@@ -106,6 +107,7 @@ class StudentController extends Controller
         ]);
 
         $result = $this->studentInterface->updateStudent($request, $student);
+        //info($result);
 
         if ($result) {
             return redirect()
@@ -151,6 +153,10 @@ public function search(Request $request)
         $students = $this->studentInterface->search($request);
         return view('student.index')->with(['students' => $students]);
 
+}
+
+public function api(){
+        return view('student.shows');
 }
 }
 ?>

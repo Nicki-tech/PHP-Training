@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\API\StudentAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ Route::get('/', function () {
 
 // Students list resource route
 Route::resource('students', StudentController::class);
+
+Route::resource('resource', 'App\Http\Controllers\API\StudentAPIController');
+//Route::resource('students', StudendAPIController::class);
 Route::get('export','App\Http\Controllers\Student\StudentController@export')->name('export');
 Route::get('import','App\Http\Controllers\Student\StudentController@showimport')->name('student.import');
 Route::post('import','App\Http\Controllers\Student\StudentController@import')->name('student.import');
@@ -28,5 +32,10 @@ Route::get('search', 'App\Http\Controllers\Student\StudentController@search')->n
 //Route::get('search', 'App\Http\Controllers\Student\StudentController@searchs')->name('student.search');
 
 
+Route::get('/shows', function(){
+    return view('student_api.shows');
+});
 
-
+Route::get('/update/{id}', function(){
+    return view('student_api.update');
+});
