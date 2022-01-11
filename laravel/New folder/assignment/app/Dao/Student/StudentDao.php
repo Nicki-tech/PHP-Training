@@ -98,5 +98,14 @@ class StudentDao implements StudentDaoInterface
 
 
     }
+
+    public function sendEmailForm()
+    {
+        $students = DB::table('students')
+            ->join('majors', 'students.major_id', '=', 'majors.id')
+            //->whereNull('students.deleted_at')
+            ->select('students.*', 'majors.name as major');
+        return $students->get();
+    }
 }
 

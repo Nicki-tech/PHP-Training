@@ -39,3 +39,13 @@ Route::get('/shows', function(){
 Route::get('/update/{id}', function(){
     return view('student_api.update');
 });
+
+Route::get('/index',function(){
+    return view('student_api.index')->name('index');
+});
+
+
+Route::get('/email', 'App\Http\Controllers\Student\StudentController@email')->name('student.emailform');
+
+Route::post('/email', 'App\Http\Controllers\Student\StudentController@sendEmailForm')->name('sendEmailForm');
+

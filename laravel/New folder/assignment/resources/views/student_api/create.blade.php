@@ -48,7 +48,7 @@
           <span class="text-danger">{{ $errors->first('address') }}</span>
           @endif
         </div>
-        <button type="submit" class="btn btn-success save-data" id="savestudent" href={{route('student_api.shows')}}>
+        <button type="submit" class="btn btn-success save-data" id="savestudent">
           Add Student
         </button>
         <button type="submit" class="btn btn-success">

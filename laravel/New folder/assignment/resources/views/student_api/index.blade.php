@@ -1,38 +1,89 @@
 @extends('layouts.app')
 @section('content')
+<h1>Student List with Ajax</h1>
+<table class="table table-success table-striped" id="first">
+    <thead>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Major</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
 
-<div class="table-responsive text-center">
-    <table class="table table-borderless" id="table">
-        <thead>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Major</th>
-                <th>Date</th>
-                <th>Action</th>
-        </thead>
-        @foreach ($students as $student)
-        <tr>
-          <td>{{ $student->name }}</td>
-          <td>{{ $student->email }}</td>
-          <td>{{ $student->phone }}</td>
-          <td>{{ $student->address }}</td>
-          <td>{{ $student->major->name}}</td>
-          <td>{{ $student->created_at}}</td>
-          <td>
-            <a href="{{ route('edit', [$student->id]) }}"><span class='glyphicon glyphicon-pencil'></span></a>
-            <a href="" style="display: inline;"><form action="{{ route('students.destroy', [$student->id]) }}" onclick="return confirm('Are you sure?')" method="POST">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm delete"><span class='glyphicon glyphicon-trash'>
-                </span>
-             </a>
-            </form>
-          </td>
-        </tr>
-        @endforeach
-    </table>
-</div>
+        $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8000/api/store',
+        success: function (result) {
+            result.forEach(students=>{
+            $("tbody").append(`<tr>
+                <td id="sid">${students.id}</td>
+                <td>${students.name}</td>
+                <td>${students.email}</td>
+                <td>${students.phone}</td>
+                <td>${students.address}</td>
+                <td>${students.major.name}</td>
+                <td>
+                    <td><a id="edit-post"
+                        data-id="${students.id}" href="/update/${students.id}"
+                        class="btn btn-info">Edit</a></td>
+                    </td>
+                    <td><a id="delete-post"
+                        data-id="${students.id}"
+                        class="btn btn-danger">Delete</a></td>
+                    </td>
+                    <td><a href="/api/create/"
+                        class="btn btn-info">Add Student</a></td>
+                    </td>
+                </tr>`);
+            });
+        console.log(result);
+        }
+        });
 
+       $(document).on('click','#edit-post',function(){
+
+           var id = $(this).data('id');
+           var url = 'http://localhost:8000/api/students/'+id+'/edit';
+
+           $.get(url,{id:id},function (data) {
+            console.log(data);
+           },'json');
+       });
+
+
+    $(document).on('click', '#delete-post', function (e) {
+         e.preventDefault();
+        var id = $(this).data("id");
+        var _token = $("input[name_token]").val();
+        var confirmation = confirm("are you sure?");
+        if (confirmation) {
+        $.ajax({
+            url:'http://localhost:8000/api/delete/'+id,
+            type: "DELETE",
+            cache:false,
+            data:{
+            },
+            success:function(response){
+              $('#sid'+id).remove();
+              location.reload();
+            }
+        });
+       }
+    });
+  });
+
+</script>
 @endsection
+

@@ -88,7 +88,10 @@ class StudentAPIController extends Controller
     {
         return view('student.edit');
     }
+    public function accept(){
+        return view('student_api.index');
 
+    }
     public function update(Request $request,$id)
     {
         $request->validate([

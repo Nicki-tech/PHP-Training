@@ -46,5 +46,14 @@ interface StudentServiceInterface
     public function export();
     public function import(Request $request);
     public function search(Request $request);
+     /**
+     * To send email to created student
+     */
+    public function sendEmail();
+
+    /**
+     * Send email with student form
+     */
+    public function sendEmailForm();
 }
 ?>

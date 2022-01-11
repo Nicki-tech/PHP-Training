@@ -64,6 +64,11 @@
 
            Import</a>
        </button>
+       <button type="submit" class="btn btn-success">
+        <a style = "color: white; text-decoration: none;"href="{{ route('student.emailform') }}">
+
+           Send Email</a>
+       </button>
 
 
 

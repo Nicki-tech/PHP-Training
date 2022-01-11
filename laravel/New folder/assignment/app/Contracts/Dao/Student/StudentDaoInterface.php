@@ -45,6 +45,7 @@ interface StudentDaoInterface
      */
     public function deleteStudent(Student $student);
     public function search(Request $request);
+    public function sendEmailForm();
 
 }
 

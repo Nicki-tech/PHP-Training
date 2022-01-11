@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
+
 
 class StudentController extends Controller
 {
@@ -66,21 +68,15 @@ class StudentController extends Controller
             'address' => 'required',
             'major' => 'required'
         ]);
-        $student = $this->studentInterface->saveStudent($request);
+        $this->studentInterface->saveStudent($request);
+        $this->studentInterface->sendEmail();
+        return redirect()
+        ->route('students.index')
+        ->with('success', 'Student created and send email successfully.');
 
-        if ($student) {
-            return redirect()
-                ->route('students.index')
-                ->with('success', 'Student created successfully.');
-        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Student $student)
     {
         $majors = $this->studentInterface->getMajors();
@@ -132,31 +128,64 @@ class StudentController extends Controller
     {
         return $this->studentInterface->export();
     }
-    public function showimport(){
+    public function showimport()
+    {
         return view('student.import');
     }
-    public function searchs(){
+    public function searchs()
+    {
         return view('student.search');
     }
 
     public function import(Request $request)
     {
         $request->validate([
-            'file'=>'required',
+            'file' => 'required',
         ]);
         $this->studentInterface->import($request);
         return redirect()->route('students.index');
     }
+    public function search(Request $request)
 
-public function search(Request $request)
-{
+    {
         $students = $this->studentInterface->search($request);
         return view('student.index')->with(['students' => $students]);
-
-}
-
-public function api(){
+    }
+    public function api()
+    {
         return view('student.shows');
-}
+
+    }
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'subject' => 'required',
+        ]);
+
+        $data = [
+            'subject' => $request->subject,
+            'email' => $request->email,
+        ];
+
+        Mail::send('email', $data, function ($message) use ($data) {
+            $message->to($data['email'])
+                ->subject($data['subject']);
+        });
+
+        return back()->with(['message' => 'Email successfully sent!']);
+    }
+    public function email(){
+        return view('student.emailform');
+    }
+
+
+    public function sendEmailForm(Request $request){
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        $this->studentInterface->sendEmailForm($request);
+            return redirect()->route('students.index')->with('success', 'Email is successfully sent.');
+    }
 }
 ?>
