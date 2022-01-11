@@ -19,28 +19,31 @@ use App\Http\Controllers\API\StudentAPIController;
 Route::get('/', function () {
     return redirect()->route('students.create');
 });
-
+Route::group(['middleware'=>['web']], function () {
 // Students list resource route
 Route::resource('students', StudentController::class);
+});
 
 Route::resource('resource', 'App\Http\Controllers\API\StudentAPIController');
 //Route::resource('students', StudendAPIController::class);
-Route::get('export','App\Http\Controllers\Student\StudentController@export')->name('export');
-Route::get('import','App\Http\Controllers\Student\StudentController@showimport')->name('student.import');
-Route::post('import','App\Http\Controllers\Student\StudentController@import')->name('student.import');
+Route::get('export', 'App\Http\Controllers\Student\StudentController@export')->name('export');
+Route::get('import', 'App\Http\Controllers\Student\StudentController@showimport')->name('student.import');
+Route::post('import', 'App\Http\Controllers\Student\StudentController@import')->name('student.import');
 Route::get('search', 'App\Http\Controllers\Student\StudentController@search')->name('student.index');
-//Route::get('search', 'App\Http\Controllers\Student\StudentController@searchs')->name('student.search');
+
+//Route::get('editform', 'App\Http\Controllers\Student\StudentController@edit')->name('student.edit');
+Route::post('/update/{id}', 'App\Http\Controllers\Student\StudentController@update')->name('students.update');
 
 
-Route::get('/shows', function(){
+Route::get('/shows', function () {
     return view('student_api.shows');
 });
 
-Route::get('/update/{id}', function(){
+Route::get('/update/{id}', function () {
     return view('student_api.update');
 });
 
-Route::get('/index',function(){
+Route::get('/index', function () {
     return view('student_api.index')->name('index');
 });
 
@@ -48,4 +51,3 @@ Route::get('/index',function(){
 Route::get('/email', 'App\Http\Controllers\Student\StudentController@email')->name('student.emailform');
 
 Route::post('/email', 'App\Http\Controllers\Student\StudentController@sendEmailForm')->name('sendEmailForm');
-

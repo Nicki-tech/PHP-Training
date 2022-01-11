@@ -21,7 +21,7 @@ use App\Http\Controllers\API\StudentAPIController;
 Route::group(['middleware'=>['web']], function () {
 Route::get('/create', 'App\Http\Controllers\API\StudentAPIController@create');
 Route::post('/store', 'App\Http\Controllers\API\StudentAPIController@store')->name('savestudent');
-Route::post('indexs', 'App\Http\Controllers\API]StudentAPICOntroller@accept');
+Route::post('indexs', 'App\Http\Controllers\API\StudentAPIController@accept');
 Route::post('/index', 'App\Http\Controllers\API\StudentAPIController@indexs')->name('student_api.shows');
 });
 Route::delete('/delete/{id}', 'App\Http\Controllers\API\StudentAPIController@customdestroy');

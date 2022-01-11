@@ -53,15 +53,17 @@ class StudentDao implements StudentDaoInterface
      * @param App\Models\Student $student
      * @return Object saved student
      */
-    public function updateStudent(Request $request, Student $student)
+    public function updateStudent(Request $request, $id)
     {
-        return $student->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'major_id' => $request->major
-        ]);
+          Student::find('id', $id)
+            ->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'major_id' => $request->major,
+                'phone' => $request->phone,
+                'address' => $request->address,
+
+            ]);
     }
 
     /**

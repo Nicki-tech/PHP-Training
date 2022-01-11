@@ -65,9 +65,9 @@ class StudentService implements StudentServiceInterface
      * @param Student $student
      * @return Object saved student
      */
-    public function updateStudent(Request $request, Student $student)
+    public function updateStudent(Request $request,$id)
     {
-        return $this->studentDao->updateStudent($request, $student);
+        return $this->studentDao->updateStudent($request, $id);
     }
 
     /**

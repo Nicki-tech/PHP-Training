@@ -7,8 +7,7 @@ use App\Models\Student;
 use App\Models\Major;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Input;
+
 use Illuminate\Support\Facades\Mail;
 
 
@@ -91,25 +90,21 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
         //info($student);
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required',
+            'major_id' => 'required',
             'phone' => 'required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9',
-            'address' => 'required',
-            'major_id' => 'required'
+            'address' => 'required'
+
         ]);
 
-        $result = $this->studentInterface->updateStudent($request, $student);
-        //info($result);
+        $this->studentInterface->updateStudent($request, $id);
+        return redirect()->route('students.index')->with(['successMessage'=>'The student data is updated successfully!']);
 
-        if ($result) {
-            return redirect()
-                ->route('students.index')
-                ->with('success', 'Student updated successfully.');
-        }
     }
 
     /**
@@ -188,4 +183,3 @@ class StudentController extends Controller
             return redirect()->route('students.index')->with('success', 'Email is successfully sent.');
     }
 }
-?>

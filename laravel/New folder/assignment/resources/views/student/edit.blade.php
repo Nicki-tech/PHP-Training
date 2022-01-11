@@ -5,9 +5,9 @@
   <div class="card mb-5">
     <div class="card-header">Edit Student</div>
     <div class="col-md-8 mx-auto p-5">
-      <form action="{{ route('students.update', [$student->id]) }}" method="POST">
+      <form action="{{ route('students.update', [$student->id]) }}" method="PUT">
         @csrf
-        @method('PATCH')
+        @method('PUT')
 
         <div class="form-group">
           <label for="name" class="form-label">Name</label>
